@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no">
+	<title>DataTables example - Row grouping</title>
+	<link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="resources/syntax/shCore.css">
+	<link rel="stylesheet" type="text/css" href="resources/demo.css">
+	<style type="text/css" class="init">
+	
+tr.group,
+tr.group:hover {
+	background-color: #ddd !important;
+}
+
+	</style>
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" language="javascript" src="media/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" language="javascript" src="resources/syntax/shCore.js"></script>
+	<script type="text/javascript" language="javascript" src="resources/demo.js"></script>
+	<script type="text/javascript" language="javascript" class="init">
+	
+
+$(document).ready(function() {
+	var groupColumn = 2;
+	var table = $('#example').DataTable({
+		"columnDefs": [
+			{ "visible": false, "targets": groupColumn }
+		],
+		"order": [[ groupColumn, 'asc' ]],
+		"displayLength": 25,
+		"drawCallback": function ( settings ) {
+			var api = this.api();
+			var rows = api.rows( {page:'current'} ).nodes();
+			var last=null;
+
+			api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+				if ( last !== group ) {
+					$(rows).eq( i ).before(
+						'<tr class="group"><td colspan="5">'+group+'</td></tr>'
+					);
+
+					last = group;
+				}
+			} );
+		}
+	} );
+
+	// Order by the grouping
+	$('#example tbody').on( 'click', 'tr.group', function () {
+		var currentOrder = table.order()[0];
+		if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+			table.order( [ groupColumn, 'desc' ] ).draw();
+		}
+		else {
+			table.order( [ groupColumn, 'asc' ] ).draw();
+		}
+	} );
+} );
+
+
+	</script>
+</head>
+<body class="dt-example">
+	<div class="container">
+		<section>
+
+	
+			<div class="demo-html"></div>
+			<table id="example" class="display" style="width:100%">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Age</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Tiger Nixon</td>
+						<td>System Architect</td>
+						<td>Edinburgh</td>
+						<td>61</td>
+						<td>2011/04/25</td>
+						<td>$320,800</td>
+					</tr>
+			
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Age</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</tfoot>
+			</table>
+		
+		</section>
+	</div>
+
+</body>
+</html>

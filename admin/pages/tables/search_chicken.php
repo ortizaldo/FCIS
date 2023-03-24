@@ -1,0 +1,265 @@
+<?php include('header.php');?>
+ <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
+<link href="../../plugins/multi-select/css/multi-select.css" rel="stylesheet">
+  <link href="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+  <link href="../../plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+ <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+ <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+ <script src="../../plugins/dropzone/dropzone.js"></script>
+
+  <script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+  <script src="../../plugins/multi-select/js/jquery.multi-select.js"></script>
+ <script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+<script src="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+   <script src="../../plugins/nouislider/nouislider.js"></script>
+   <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+<body class="theme-red">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+<?php include('search.php');?>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+<?php include('navigation_bar.php');?>
+
+<?php include ('sidebar.php');?>
+<!--end of sidebar-->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                           Results
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+								
+						
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <?php 
+                        $chicken = $_SESSION['chicken'];
+                         ?>
+                        <div class="body">
+						    <?php
+                                 include '../../../config/db_config.php';
+                                 
+                                       $sql = "SELECT * FROM chickens where chicken_id
+                                        like'%$chicken%';";
+                                 $result = $conn->query($sql);
+
+                                 if ($result->num_rows > 0) {
+                                     print '
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                        <tr>
+                                          <th>
+                                           Chicken  Id
+                                            </th>
+                                                <th>
+                                                  Chicken  Category
+                                                </th>
+                                                  <th>
+                                              Father ID
+                                                </th>
+
+												                
+                                               <th>
+                                              Mother ID
+                                                </th>
+                                               <th>
+                                             Age
+                                                </th>
+                                                  
+                                                   
+                                                   <th>
+                                              day to transfer
+                                                </th>
+                                                   <th>
+                                            Born day
+                                                </th>
+
+												     <th>
+                                                    Handler
+                                                </th>
+                                                    <th>
+                                                    Option
+                                                </th>
+										
+                                          
+                                        </tr>
+                                    </thead> 
+                                     <tbody>';
+    
+                                  while($row = $result->fetch_assoc()) {
+                        
+                               print '
+                                        <tr>
+                                             <input type="hidden" name="id" value="'.$row['chicken_id'].'">
+                                                 <td>
+                                             '.$row['chicken_id'].'
+                                                </td>
+                                                <td>
+                                             '.$row['chicken_categories'].'
+                                                </td>
+												  
+                                                    <td>
+                                             '.$row['chicken_father_id'].'
+                                                </td>
+                                                  <td>
+                                             '.$row['chicken_mother_id'].'
+                                                </td>
+                                               <td>
+                                                    '.$row['age'].'
+                                                </td>
+                                                 
+                                                <td>
+                                                    '.$row['day_to_transfer'].'
+                                                </td>
+												    <td>
+                                                    '.$row['no_days'].'
+                                                </td>
+                                                        <td>
+                                                    '.$row['handler'].'
+                                                </td>
+
+<td class="center">
+                                                <div class="controls">
+                                                    
+                                                <div class="dropdown">
+                                                    <a class="dropdown-toggle btn bg-orange" data-toggle="dropdown" href="#">Option <i class="icon-caret-down"></i></a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <li><a rel = "facebox" href="transfer_chick.php?id='.$row['chicken_id'].'">Transfer</a>
+                                                        <li><a rel = "facebox" href="edit_chicken.php?id='.$row['chicken_id'].'">Edit</a>
+                                                        <li><a href="../../action/delete_chicken.php?ref='.$row['chicken_id'].'">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                </td>
+
+										
+											
+                                               
+                                            </tr>
+                                         ';
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                    }
+                                    }
+
+
+
+
+
+                                    else {
+                                    print '
+                                    <div class="module-body">
+                                 <div class="alert alert-danger">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <h3 style="color:green">No records Found!</h3>
+                                        All records you register will be shown here.
+                                    </div>
+                                    </div>';
+                                       }
+                                       
+                                       print ' </tbody>
+                                
+                                    </table>';
+                                     $conn->close();
+                                 ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Exportable Table -->
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+ <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+ <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+ <script src="../../plugins/dropzone/dropzone.js"></script>
+
+  <script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+  <script src="../../plugins/multi-select/js/jquery.multi-select.js"></script>
+ <script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+<script src="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+</body>
+
+</html>
