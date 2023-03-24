@@ -1,7 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "2012116664";
+$servername = "192.168.0.10";
+$username = "havamasteruser";
+$password = "root";
 $dbname = "breeders";
 
 

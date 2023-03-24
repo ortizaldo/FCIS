@@ -1,0 +1,18 @@
+{
+  "Projects": [
+    {
+      "Name": "Havasupai",
+      "Id": "521027",
+      "Project": {
+        "name": "Havasupai",
+        "id": "521027",
+        "isPicked": false,
+        "label": "Havasupai",
+        "picked": false
+      },
+      "Installation": 444426
+    }
+  ],
+  "ActiveProjectName": "",
+  "ActiveProjectId": ""
+}

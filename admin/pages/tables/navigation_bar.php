@@ -94,9 +94,9 @@ $ex2 = false;
 $conn->close();
 
 
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
+$servername = "192.168.0.10";
+$username = "havamasteruser";
+$password = "root";
 $dbname = "breeders";
 
 
